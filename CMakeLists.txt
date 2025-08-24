@@ -9,8 +9,8 @@ file(GLOB SOURCES "src/*.cpp")
 
 add_library(NeuralNet STATIC ${SOURCES})
 
-add_executable(xor_example examples/xor_example.cpp)
-target_link_libraries(xor_example NeuralNet)
+add_executable(nn examples/main.cpp)
+target_link_libraries(nn NeuralNet)
 
 add_executable(test_network tests/test_network.cpp)
 target_link_libraries(test_network NeuralNet)
