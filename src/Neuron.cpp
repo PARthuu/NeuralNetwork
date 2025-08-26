@@ -1,5 +1,4 @@
 #include "NeuralNet/Neuron.hpp"
-#include "NeuralNet/Activations.hpp"
 #include <cstdlib>
 #include <cmath>
 
@@ -7,7 +6,7 @@ Neuron::Neuron(int inputSize)
 {
         for (int i = 0; i < inputSize; ++i)
         {
-                weights.push_back((double)rand() / RAND_MAX);
+                weights.push_back(0.0);
         }
         bias = (double)rand() / RAND_MAX;
 }
