@@ -6,17 +6,18 @@
 class Neuron
 {
 public:
-        std::vector<double> weights;
-        double bias;
-        double lastOutput;
-        std::vector<double> lastInputs;
+    std::vector<double> weights;
+    double bias;
+    double lastOutput;
+    std::vector<double> lastInputs;
 
-        Neuron(int inputSize);
+    Neuron(int inputSize);
+    Neuron() = default;
 
-        double activate(const std::vector<double> &inputs);
-        double sigmoid(double x);
-        double sigmoid_derivative(double x);
-        void updateWeights(const std::vector<double> &dWeights, double dBias, double learningRate);
+    double activate(const std::vector<double> &inputs);
+    double sigmoid(double x);
+    double sigmoid_derivative(double x);
+    void updateWeights(const std::vector<double> &dWeights, double dBias, double learningRate);
 };
 
 #endif

@@ -1,77 +1,97 @@
 #include "NeuralNet/Utils.hpp"
+#include "NeuralNet/Layer.hpp"
 #include <fstream>
-#include <sstream>
 #include <stdexcept>
-#include <iostream>
 
-static std::vector<double> stringToDoubleVector(const std::string &str, size_t expectedLength)
+// Helper functions to read/write vector<double>
+static void writeVector(std::ofstream &out, const std::vector<double> &vec)
 {
-	std::vector<double> vec;
-	vec.reserve(expectedLength);
-
-	for (char ch : str)
-	{
-		vec.push_back(static_cast<double>(ch - '0'));
-		// if (ch == '0' || ch == '1')
-		// {
-		// 	vec.push_back(static_cast<double>(ch - '0'));
-		// }
-		// else
-		// {
-		// 	throw std::runtime_error("Invalid character in input: " + std::string(1, ch));
-		// }
-	}
-
-	// if (vec.size() != expectedLength)
-	// {
-	// 	throw std::runtime_error("Expected " + std::to_string(expectedLength) +
-	// 							 " values, but got " + std::to_string(vec.size()));
-	// }
-
-	return vec;
+    size_t size = vec.size();
+    out.write(reinterpret_cast<const char *>(&size), sizeof(size));
+    out.write(reinterpret_cast<const char *>(vec.data()), size * sizeof(double));
 }
 
-Utils::Data Utils::load_data(const std::string &filepath)
+static void readVector(std::ifstream &in, std::vector<double> &vec)
 {
-	std::ifstream file(filepath);
-	if (!file.is_open())
-	{
-		throw std::runtime_error("Failed to open file: " + filepath);
-	}
-
-	std::string line;
-
-	const size_t input_length = 70;
-	const size_t target_length = 256;
-	Data data;
-
-	while (std::getline(file, line))
-	{
-		std::stringstream ss(line);
-		std::string inputStr, outputStr;
-
-		std::getline(ss, inputStr, ',');
-		std::getline(ss, outputStr);
-
-		// if (!std::getline(ss, inputStr, ',') || !std::getline(ss, outputStr))
-		// {
-		// 	std::cerr << "Skipping malformed line: " << line << "\n";
-		// 	continue;
-		// }
-
-		try
-		{
-			std::vector<double> inVec = stringToDoubleVector(inputStr, input_length);
-			std::vector<double> outVec = stringToDoubleVector(outputStr, target_length);
-
-			data.inputs.push_back(inVec);
-			data.targets.push_back(outVec);
-		}
-		catch (const std::exception &e)
-		{
-			std::cerr << "Error parsing line: " << e.what() << "\n";
-		}
-	}
-
-	return data;
+    size_t size;
+    in.read(reinterpret_cast<char *>(&size), sizeof(size));
+    vec.resize(size);
+    in.read(reinterpret_cast<char *>(vec.data()), size * sizeof(double));
 }
+
+// Save network
+void Utils::saveNetwork(const Network &network, const std::string &filename)
+{
+    std::ofstream out(filename, std::ios::binary);
+    if (!out)
+        throw std::runtime_error("Failed to open file for saving.");
+
+    std::vector<Layer> layers = network.hiddenLayers;
+    layers.push_back(network.outputLayer);
+
+    size_t numLayers = layers.size();
+    out.write(reinterpret_cast<const char *>(&numLayers), sizeof(numLayers));
+
+    for (const Layer &layer : layers)
+    {
+        size_t numNeurons = layer.neurons.size();
+        out.write(reinterpret_cast<const char *>(&numNeurons), sizeof(numNeurons));
+
+        for (const Neuron &neuron : layer.neurons)
+        {
+            writeVector(out, neuron.weights);
+            out.write(reinterpret_cast<const char *>(&neuron.bias), sizeof(neuron.bias));
+            out.write(reinterpret_cast<const char *>(&neuron.lastOutput), sizeof(neuron.lastOutput));
+            writeVector(out, neuron.lastInputs);
+        }
+    }
+
+    out.close();
+}
+
+Network Utils::loadNetwork(const std::string &filename)
+{
+    std::ifstream in(filename, std::ios::binary);
+    if (!in)
+        throw std::runtime_error("Failed to open file for loading.");
+
+    size_t numLayers;
+    in.read(reinterpret_cast<char *>(&numLayers), sizeof(numLayers));
+
+    std::vector<Layer> layers;
+    layers.reserve(numLayers);
+
+    for (size_t i = 0; i < numLayers; ++i)
+    {
+        size_t numNeurons;
+        in.read(reinterpret_cast<char *>(&numNeurons), sizeof(numNeurons));
+
+        Layer layer;
+        layer.neurons.reserve(numNeurons);
+
+        for (size_t j = 0; j < numNeurons; ++j)
+        {
+            Neuron neuron;
+            readVector(in, neuron.weights);        // std::vector<double>
+            in.read(reinterpret_cast<char *>(&neuron.bias), sizeof(neuron.bias));
+            in.read(reinterpret_cast<char *>(&neuron.lastOutput), sizeof(neuron.lastOutput));
+            readVector(in, neuron.lastInputs);     // std::vector<double>
+            layer.neurons.push_back(std::move(neuron));
+        }
+
+        layers.push_back(std::move(layer));
+    }
+
+    in.close();
+
+    Network network;
+    if (!layers.empty())
+    {
+        network.outputLayer = std::move(layers.back());
+        layers.pop_back();
+    }
+    network.hiddenLayers = std::move(layers);
+
+    return network;
+}
+

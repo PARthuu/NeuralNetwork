@@ -7,13 +7,14 @@
 class Layer
 {
 public:
-        std::vector<Neuron> neurons;
-        std::vector<double> lastOutputs;
+    std::vector<Neuron> neurons;
+    std::vector<double> lastOutputs;
 
-        Layer(int inputSize, int neuronCount);
+    Layer(int inputSize, int neuronCount);
+    Layer() = default;
 
-        std::vector<double> forward(const std::vector<double> &inputs);
-        std::vector<double> backward(const std::vector<double> &dOutputs, double learningRate);
+    std::vector<double> forward(const std::vector<double> &inputs);
+    std::vector<double> backward(const std::vector<double> &dOutputs, double learningRate);
 };
 
 #endif

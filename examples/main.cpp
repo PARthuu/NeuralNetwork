@@ -1,7 +1,10 @@
 #include <iostream>
-#include "NeuralNet/Network.hpp"
+#include <string>
 #include "NeuralNet/Loss.hpp"
 #include "NeuralNet/DataLoader.hpp"
+#include "NeuralNet/Utils.hpp"
+
+const std::string model_path = "models/hash.model";
 
 int main(int argc, char* argv[])
 {
@@ -20,7 +23,7 @@ int main(int argc, char* argv[])
 	DataLoader::Data data = DataLoader::load_data(filePath);
 
 	// Training loop
-	int epochs = 5000;
+	int epochs = 1000;
 	double learningRate = 20;
 
 	for (int epoch = 0; epoch < epochs; epoch++)
@@ -41,6 +44,11 @@ int main(int argc, char* argv[])
 			std::cout << "Epoch " << epoch << ", Loss: " << totalLoss << std::endl;
 		}
 	}
+
+
+
+    Utils::saveNetwork(net, model_path);
+    // Network net = Utils::loadNetwork(model_path);
 
 	// Final predictions
 	std::cout << "\nFinal predictions after training:\n";
