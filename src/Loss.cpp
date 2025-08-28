@@ -19,7 +19,6 @@ std::vector<double> Loss::mse_derivative(const std::vector<double> &predicted, c
         for (size_t i = 0; i < predicted.size(); ++i)
         {
                 derivatives.push_back(2 * (predicted[i] - target[i]) / predicted.size());
-                // std::cout << "Derivative " << predicted[i] << ": " << derivatives.back() << std::endl;
         }
         return derivatives;
 }
