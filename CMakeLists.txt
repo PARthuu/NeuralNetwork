@@ -12,8 +12,11 @@ file(GLOB SOURCES "src/*.cpp")
 
 add_library(NeuralNet STATIC ${SOURCES})
 
-add_executable(nn examples/main.cpp)
-target_link_libraries(nn NeuralNet)
+add_executable(train examples/train.cpp)
+target_link_libraries(train NeuralNet)
+
+add_executable(run_nn examples/run_nn.cpp)
+target_link_libraries(run_nn NeuralNet)
 
 add_executable(test_network tests/test_network.cpp)
 target_link_libraries(test_network NeuralNet)
