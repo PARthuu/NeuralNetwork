@@ -73,5 +73,6 @@ DataLoader::Data DataLoader::load_data(const std::string &filepath)
 		}
 	}
 
+    std::cout<< "Data Loaded" << std::endl;
 	return data;
 }
