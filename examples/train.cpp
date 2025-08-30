@@ -26,15 +26,23 @@ int main(int argc, char* argv[])
         if ( (arg == "-f" || arg == "--file") && (i+1 < argc)) {
             filePath = argv[++i];
         }
+
+        else if (arg == "--modelPath" && i+1 < argc){
+            model_path = argv[++i];
+        }
+
         else if ( (arg == "-e" || arg == "--epochs") && (i+1 < argc)) {
             epochs = std::stoi(argv[++i]);
         }
+
         else if ((arg == "-l" || arg == "--learningRate") && (i+1 < argc)) {
             learningRate = std::stoi(argv[++i]);
         }
+
         else if ((arg == "-m" || arg == "--modelPath") && (i+1 < argc)) {
             model_path = argv[++i];
         }
+
         else if ( (arg == "-n" || arg == "--network") && (i+1 < argc)) {
             std::string input = argv[++i];
             std::vector<int> values;
