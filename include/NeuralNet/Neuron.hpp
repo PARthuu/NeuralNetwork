@@ -2,8 +2,9 @@
 #define NEURON_HPP
 
 #include <vector>
+#include "Activations.hpp"
 
-class Neuron
+class Neuron : public ActivationFunctions
 {
 public:
     std::vector<double> weights;
@@ -15,8 +16,6 @@ public:
     Neuron() = default;
 
     double activate(const std::vector<double> &inputs);
-    double sigmoid(double x);
-    double sigmoid_derivative(double x);
     void updateWeights(const std::vector<double> &dWeights, double dBias, double learningRate);
 };
 

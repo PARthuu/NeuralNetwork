@@ -25,7 +25,7 @@ std::vector<double> Layer::backward(const std::vector<double> &dOutputs, double 
         for (size_t i = 0; i < neurons.size(); ++i)
         {
                 Neuron &neuron = neurons[i];
-                double delta = dOutputs[i] * neuron.sigmoid_derivative(neuron.lastOutput);
+                double delta = dOutputs[i] * neuron.sigmoidDerivative(neuron.lastOutput);
 
                 std::vector<double> dWeights;
                 for (double input : neuron.lastInputs)

@@ -1,6 +1,5 @@
 #include "NeuralNet/Neuron.hpp"
 #include <cstdlib>
-#include <cmath>
 
 Neuron::Neuron(int inputSize)
 {
@@ -9,16 +8,6 @@ Neuron::Neuron(int inputSize)
                 weights.push_back(0.0);
         }
         bias = (double)rand() / RAND_MAX;
-}
-
-double Neuron::sigmoid(double x)
-{
-        return 1.0 / (1.0 + std::exp(-x));
-}
-
-double Neuron::sigmoid_derivative(double x)
-{
-        return x * (1 - x); // assuming x is the sigmoid output
 }
 
 double Neuron::activate(const std::vector<double> &inputs)
