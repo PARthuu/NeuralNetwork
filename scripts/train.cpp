@@ -8,6 +8,7 @@
 
 int main(int argc, char* argv[])
 {
+
     std::string model_path = "models/hash.model";
     std::string filePath;
 
@@ -18,7 +19,6 @@ int main(int argc, char* argv[])
     // Training loop
     int epochs = 1000;
     double learningRate = 20;
-
 
     for (int i = 1; i<argc; ++i) {
         std::string arg = argv[i];

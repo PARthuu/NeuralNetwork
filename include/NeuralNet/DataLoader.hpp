@@ -19,4 +19,4 @@ public:
 
 };
 
-#endif // DATALOADER_HPP
+#endif

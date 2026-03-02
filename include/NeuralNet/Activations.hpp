@@ -28,4 +28,4 @@ public:
     static std::vector<double> tanhDerivative(const std::vector<double> &vec);
 };
 
-#endif // ACTIVATION_FUNCTIONS_HPP
+#endif

@@ -1,5 +1,3 @@
-// Utils.hpp
-
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
@@ -12,4 +10,4 @@ public:
     static Network loadNetwork(const std::string& filename);
 };
 
-#endif // UTILS_HPP
+#endif

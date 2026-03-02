@@ -50,7 +50,7 @@ std::vector<double> ActivationFunctions::custom(const std::vector<double> &vec)
     std::vector<double> result;
     result.reserve(vec.size());
     for (double x : vec)
-        result.push_back(custom(x));
+    result.push_back(custom(x));
     return result;
 }
 
@@ -59,7 +59,7 @@ std::vector<double> ActivationFunctions::sigmoid(const std::vector<double> &vec)
     std::vector<double> result;
     result.reserve(vec.size());
     for (double x : vec)
-        result.push_back(sigmoid(x));
+    result.push_back(sigmoid(x));
     return result;
 }
 
@@ -68,7 +68,7 @@ std::vector<double> ActivationFunctions::relu(const std::vector<double> &vec)
     std::vector<double> result;
     result.reserve(vec.size());
     for (double x : vec)
-        result.push_back(relu(x));
+    result.push_back(relu(x));
     return result;
 }
 
@@ -77,7 +77,7 @@ std::vector<double> ActivationFunctions::tanh(const std::vector<double> &vec)
     std::vector<double> result;
     result.reserve(vec.size());
     for (double x : vec)
-        result.push_back(tanh(x));
+    result.push_back(tanh(x));
     return result;
 }
 
@@ -86,7 +86,7 @@ std::vector<double> ActivationFunctions::sigmoidDerivative(const std::vector<dou
     std::vector<double> result;
     result.reserve(vec.size());
     for (double x : vec)
-        result.push_back(sigmoidDerivative(x));
+    result.push_back(sigmoidDerivative(x));
     return result;
 }
 
@@ -95,7 +95,7 @@ std::vector<double> ActivationFunctions::reluDerivative(const std::vector<double
     std::vector<double> result;
     result.reserve(vec.size());
     for (double x : vec)
-        result.push_back(reluDerivative(x));
+    result.push_back(reluDerivative(x));
     return result;
 }
 
@@ -104,6 +104,6 @@ std::vector<double> ActivationFunctions::tanhDerivative(const std::vector<double
     std::vector<double> result;
     result.reserve(vec.size());
     for (double x : vec)
-        result.push_back(tanhDerivative(x));
+    result.push_back(tanhDerivative(x));
     return result;
 }
