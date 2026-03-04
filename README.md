@@ -105,7 +105,7 @@ The Network I am building has 70 input nodes, 500 nodes in only one layer of hid
 1. When training data was repeated.
 ![Prediction on Training Data img](./images/training_data.png)
 2. When test data was introduces.
-![Prediction on Test Data img](./images/test_data.png.png)
+![Prediction on Test Data img](./images/test_data.png)
 
 ### How to Read
 
